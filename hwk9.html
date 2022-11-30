@@ -4,9 +4,15 @@
    <!--temporary download of jQuery from a CDN-->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script type="text/javascript">
+      function clearinputs(){
+         //blank the placeholder named showresults
+         $("#showresults").html("");
+      }
      function runjQuery(){
         //read input search text 
         var inputSearch = $("#searchTxt").val().trim();
+        //validation
+        if(inputSearch != ""){
          $.ajax({
             url:   "hwk9.php",
             data:  "searchKey="+inputSearch,
@@ -16,30 +22,14 @@
 
             }
          });
+            }
          }
-         function showinfo(){
-            //read option value
-
-            var selectedOption = $("#presidentList").val();
-            //get the values
-            if(selectedOption !=""){
-            var photo = selectedOption.split("^")[0];
-            var name = selectedOption.split("^")[1];
-            var party = selectedOption.split("^")[2];
-       
-            $("#showresults").html("<table border='1'><tr>"+
-                "<th>Photo</th><th>Name</th><th> Party</th></tr>"+
-                "<tr><td><img src='"+photo+"'</td>"+"<td>"+name+"</td>"+"<td>"+party+"</td></tr></table>")
-         }else{
-            $("#showresults").html("");
-         }
-        }
-        
+         
    </script>
 </head>
 <body>
     <h2>US presidents (partial)</h2>
-    <p>Search:<input type="text" id="searchTxt" autofocus size="30"
+    <p>Search:<input type="text" id="searchTxt" autofocus onkeydown="clearinputs()"size="30"
        onchange="runjQuery()"placeholder="results"></p>
     <p></p>
     <div id="showresults">
